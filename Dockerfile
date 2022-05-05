@@ -12,12 +12,16 @@
 FROM nvidia/cuda:11.3.1-base
 #FROM python:3.8.10-slim-buster
 
-LABEL tagVER="sb_asr_fr"
+LABEL tagVER="sb-asr-fr"
 
 ENV TERM xterm-256color
 
 # Set timezone:
 RUN ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
+
+# resolve the PGP key error issue
+RUN rm /etc/apt/sources.list.d/cuda.list
+RUN rm /etc/apt/sources.list.d/nvidia-ml.list
 
 # install tools and packages
 RUN apt-get update && \
